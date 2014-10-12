@@ -27,18 +27,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let task1 = TaskModel(task: "Study French", subTask: "Verbs", date: date1)
         let task2 = TaskModel(task: "Eat Dinner", subTask: "Burgers", date: date2)
         let task3 = TaskModel(task: "Gym", subTask: "Running", date: date3)
-        
-        
-
-        
-        //let task1:Dictionary<String, String> = ["task": "Stduy French", "subTask": "Verbs", "date":"02/10/2014"]
-        //let task2:Dictionary<String, String> = ["task": "Eat Dinner", "subTask": "Burgers", "date":"02/10/2014"]
-        //let task3:Dictionary<String, String> = ["task": "Gym", "subTask": "Running", "date":"02/10/2014"]
         taskArray = [task1, task2, task3]
         
         self.tableView.reloadData()
     }
 
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        self.tableView.reloadData()
+        
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -52,8 +50,22 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             let indexPath = self.tableView.indexPathForSelectedRow()
             let thisTask = self.taskArray[indexPath!.row]
             detailVC.taskDetailModel = thisTask
+            detailVC.mainVC = self
             
         }
+        if segue.identifier == "showTaskAdd" {
+            
+            let addTaskVC:AddTaskViewController = segue.destinationViewController as AddTaskViewController
+            addTaskVC.mainVC = self
+            
+        }
+        
+    }
+    
+    @IBAction func taskAddButtonTapped(sender: UIBarButtonItem) {
+        
+        self.performSegueWithIdentifier("showTaskAdd", sender: self)
+        
         
     }
     //UITableViewDataSource

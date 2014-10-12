@@ -11,6 +11,8 @@ import UIKit
 class TaskDetailViewController: UIViewController {
     
     var taskDetailModel:TaskModel!
+    var mainVC:ViewController!
+    
     
     @IBOutlet var taskTextField: UITextField!
     @IBOutlet var subtaskTextField: UITextField!
@@ -32,6 +34,22 @@ class TaskDetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func cancelButtonTapped(sender: UIBarButtonItem) {
+        self.navigationController?.popViewControllerAnimated(true)
+        
+        
+    }
+    
+    
+    @IBAction func doneBarButtonItemPressed(sender: UIBarButtonItem) {
+        
+        var task:TaskModel = TaskModel(task: self.taskTextField.text, subTask: self.subtaskTextField.text, date: self.dueDatePicker.date)
+        
+        self.mainVC.taskArray[self.mainVC.tableView.indexPathForSelectedRow()!.row] = task
+        
+        self.navigationController?.popViewControllerAnimated(true)
+        
+    }
 
     /*
     // MARK: - Navigation
